@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-05-28_21-07-01",
+  "format": "ppo_b_handoff_state_library",
+  "npz_path": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\rough_scenario_classification\\Lunar_inpact_30min_2026-05-23_15-57-28.npz",
+  "source_policy": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\Saved Policies\\PPOA_2026-05-22_08-51-37_run\\Model__stage03_step00729088_R-4.12_SR0.000_LD1.00422_CMnan__2026-05-23_15-57-28.zip",
+  "source_run_dir": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\Saved Policies\\PPOA_2026-05-22_08-51-37_run",
+  "recovered": {
+    "policy_step": -1,
+    "stage_idx": 0,
+    "stage_name": "ppo_a_stage_1_staged_tli_tiny_noise",
+    "mcc_enabled": true,
+    "tli_only_mode": true,
+    "reward_after_tli_ballistic_enabled": true,
+    "config_file_found": true,
+    "trainer_mode": "ppo_a",
+    "tli_control_mode": "full",
+    "run_dir_used_for_config": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\Saved Policies\\PPOA_2026-05-22_08-51-37_run"
+  },
+  "post_tli_minutes": 30.0,
+  "label": 1,
+  "label_name": "savable",
+  "t_tli": 0.0008843534026366435,
+  "t_handoff": 0.005681794767242188,
+  "tli_time_source": "action_history",
+  "staged_tli": {
+    "pre_tli_burn_count": 8,
+    "pre_tli_cum_dv": 3.123413111342352,
+    "dv0": 3.123413111342352,
+    "burn_event_counts": {
+      "PRE_TLI_BURN": 7,
+      "TLI_FINAL_BURN": 1
+    }
+  },
+  "how_to_use_in_curriculum_ppob": {
+    "MAIN_LIB": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\rough_scenario_classification\\Lunar_inpact_30min_2026-05-23_15-57-28.npz",
+    "MAIN_CASE_IDX": 0,
+    "ppo_b_case_source": "scenario_library",
+    "ppo_b_use_fixed_index": true,
+    "ppo_b_fixed_index": 0
+  }
+}

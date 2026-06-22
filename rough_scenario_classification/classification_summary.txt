@@ -1,0 +1,44 @@
+ROUGH SWEEP SCENARIO CLASSIFICATION SUMMARY
+================================================================================
+
+Classification rules used
+--------------------------------------------------------------------------------
+GOOD:
+  term_reason == "success"
+
+SAVABLE:
+  Rule A: success flag latched though not strict success
+  Rule B: 0 < min_corridor_dist <= 0.012000 and min_rM <= 0.180000
+  Rule C: invalid_preflyby_earth_return near success ridge with ddv_to_good <= 0.040000 km/s, theta margin 0.350000 rad, min_rM <= 0.180000
+
+BAD:
+  everything else
+
+Counts in full rough file
+--------------------------------------------------------------------------------
+    good: 9
+ savable: 31
+     bad: 6960
+
+Counts actually replayed/plotted/exported
+--------------------------------------------------------------------------------
+    good: 9
+ savable: 31
+     bad: 500
+
+Term reason by class (full file)
+--------------------------------------------------------------------------------
+
+[GOOD]
+  success: 9
+
+[SAVABLE]
+  invalid_preflyby_earth_return: 24
+  earth_impact: 6
+  timeout: 1
+
+[BAD]
+  invalid_preflyby_earth_return: 3850
+  escape: 2900
+  timeout: 200
+  moon_impact: 10
