@@ -1,0 +1,194 @@
+\begin{table*}[!t]
+\centering
+\caption{Mapping between PPO-TLI shorthand labels and original run identifiers.}
+\label{tab:tli_run_key}
+\renewcommand{\arraystretch}{1.1}
+\scriptsize
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llll}
+\toprule
+\textbf{Short label} & \textbf{Timestamp} & \textbf{Original file} & \textbf{Note}\\
+\midrule
+TLI-1 & 2026-05-16\_07-30-12 & PPOA\_2026-05-16\_07-30-12\_run\_config\_Weak\_Crash\_Penalty.txt & phase angle 4.04056--4.04056\\
+TLI-2 & 2026-05-19\_20-55-49 & PPOA\_2026-05-19\_20-55-49\_run\_config\_High\_Lunar\_Reward.txt & phase angle 4.04056--4.04056\\
+TLI-3 & 2026-05-22\_08-51-37 & PPOA\_2026-05-22\_08-51-37\_run\_config\_Entropy.txt & phase angle 4.04056--4.04056\\
+TLI-4 & 2026-06-02\_23-48-48 & PPOA\_2026-06-02\_23-48-48\_run\_config.txt & phase angle 3.95--3.95\\
+\bottomrule
+\end{tabular*}
+\end{table*}
+
+
+\begin{table*}[!t]
+\centering
+\caption{Summary of the PPO-TLI training configurations used in the thesis. Only parameters relevant to comparison between runs and curriculum progression are shown.}
+\label{tab:ppoa_all_configs}
+\renewcommand{\arraystretch}{1.1}
+\scriptsize
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccc}
+\toprule
+\textbf{Parameter} & \textbf{TLI-1} & \textbf{TLI-2} & \textbf{TLI-3} & \textbf{TLI-4}\\
+\midrule
+\multicolumn{5}{c}{\textbf{PPO Hyper-Parameters}}\\
+\midrule
+$\gamma$ & 0.997 & 0.997 & 0.997 & 0.997\\
+$\lambda_{\mathrm{GAE}}$ & 0.95 & 0.95 & 0.95 & 0.95\\
+Learning rate & $10^{-4}$ & $10^{-4}$ & $10^{-4}$ & $10^{-4}$\\
+Batch size & 256 & 256 & 256 & 256\\
+Rollout steps & 256 & 256 & 256 & 256\\
+PPO epochs & 8 & 8 & 8 & 8\\
+Clip range & 0.15 & 0.15 & 0.15 & 0.15\\
+Max gradient norm & 0.5 & 0.5 & 0.5 & 0.5\\
+Default entropy coefficient & 0.003 & 0.003 & 0.003 & 0.003\\
+Number of environments & 8 & 8 & 8 & 8\\
+\midrule
+\multicolumn{5}{c}{\textbf{Mission / Environment Parameters}}\\
+\midrule
+Initial phase angle min & 4.04056 & 4.04056 & 4.04056 & 0\\
+Initial phase angle max & 4.04056 & 4.04056 & 4.04056 & 6.28319\\
+Max TLI burn magnitude & 0.4 & 0.4 & 0.4 & 0.4\\
+Max MCC burn magnitude & 0.03 & 0.03 & 0.03 & 0.03\\
+TLI commit threshold & 3.1 & 3.1 & 3.1 & 3.1\\
+Lunar flyby radius & 0.06 & 0.06 & 0.06 & 0.06\\
+Return corridor min & 0.0143 & 0.0143 & 0.0143 & 0.0143\\
+Return corridor max & 0.06 & 0.06 & 0.06 & 0.06\\
+Maximum mission time & 2.4 & 2.4 & 2.4 & 2.4\\
+\midrule
+\multicolumn{5}{c}{\textbf{Base Reward Weights}}\\
+\midrule
+$w_{\mathrm{flyby}}$ & 140 & 140 & 40 & 2\\
+$w_{\mathrm{return}}$ & 160 & 160 & 160 & 160\\
+$w_{\Delta v}$ & 0.2 & 0.2 & 0.2 & 0.2\\
+$w_{\mathrm{budget}}$ & 80 & 80 & 80 & 80\\
+$w_{\mathrm{escape}}$ & 12 & 12 & 12 & 12\\
+$w_{\mathrm{earth}}$ & 150 & 150 & 150 & 150\\
+$w_{\mathrm{moon}}$ & 5 & 5 & 5 & 5\\
+$w_{\mathrm{postflyby\,earth}}$ & 50 & 90 & 90 & 90\\
+$w_{\mathrm{invalid}}$ & 10 & 10 & 10 & 10\\
+\midrule
+\multicolumn{5}{c}{\textbf{Curriculum Stages}}\\
+\midrule
+\multicolumn{5}{c}{\textit{Stage 1}}\\
+\midrule
+Training steps & 100\,352 & 299\,008 & 399\,360 & 399\,360\\
+Entropy coefficient & 0.004 & 0.004 & 0.005 & 0.005\\
+$w_{\mathrm{flyby}}$ & 140 & 140 & 40 & 2\\
+$w_{\mathrm{postflyby\,earth}}$ & 50 & 90 & 90 & 90\\
+$w_{\mathrm{invalid}}$ & 10 & 10 & 10 & 10\\
+$\sigma_{\Delta v,\mathrm{TLI}}$ & $9.761e-07$ & $9.761e-07$ & 0 & 0\\
+\midrule
+\multicolumn{5}{c}{\textit{Stage 2}}\\
+\midrule
+Training steps & 59\,392 & 100\,352 & 200\,704 & 200\,704\\
+Entropy coefficient & 0.003 & 0.003 & 0.004 & 0.004\\
+$w_{\mathrm{flyby}}$ & 140 & 140 & 40 & 2\\
+$w_{\mathrm{postflyby\,earth}}$ & 60 & 100 & 100 & 100\\
+$w_{\mathrm{invalid}}$ & 10 & 10 & 10 & 10\\
+$\sigma_{\Delta v,\mathrm{TLI}}$ & $9.761e-06$ & $9.761e-06$ & 0 & 0\\
+\midrule
+\multicolumn{5}{c}{\textit{Stage 3}}\\
+\midrule
+Training steps & 499\,712 & 100\,352 & 200\,704 & 200\,704\\
+Entropy coefficient & 0.002 & 0.002 & 0.002 & 0.002\\
+$w_{\mathrm{flyby}}$ & 140 & 140 & 40 & 2\\
+$w_{\mathrm{postflyby\,earth}}$ & 70 & 140 & 140 & 140\\
+$w_{\mathrm{invalid}}$ & 25 & 25 & 25 & 25\\
+$\sigma_{\Delta v,\mathrm{TLI}}$ & $9.761e-06$ & $9.761e-06$ & 0 & 0\\
+\bottomrule
+\end{tabular*}
+\end{table*}
+
+
+\begin{table*}[!t]
+\centering
+\caption{Mapping between PPO-MCC shorthand labels and original run identifiers.}
+\label{tab:mcc_run_key}
+\renewcommand{\arraystretch}{1.1}
+\scriptsize
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llll}
+\toprule
+\textbf{Short label} & \textbf{Timestamp} & \textbf{Original file} & \textbf{Note}\\
+\midrule
+MCC-1 & 2026-05-06\_17-59-54 & PPOB\_2026-05-06\_17-59-54\_run\_config.txt & trajectory index 65\\
+MCC-2 & 2026-05-08\_10-56-47 & PPOB\_2026-05-08\_10-56-47\_run\_config.txt & trajectory index 65\\
+MCC-3 & 2026-05-13\_09-26-38 & PPOB\_2026-05-13\_09-26-38\_run\_config.txt & trajectory index 65\\
+MCC-4 & 2026-05-15\_20-37-20 & PPOB\_2026-05-15\_20-37-20\_run\_config.txt & trajectory index 65\\
+MCC-5 & 2026-05-17\_22-25-40 & PPOB\_2026-05-17\_22-25-40\_run\_config.txt & trajectory index 65\\
+MCC-6 & 2026-06-02\_18-11-41 & PPOB\_2026-06-02\_18-11-41\_run\_config.txt & trajectory index 0; non-default trajectory index\\
+\bottomrule
+\end{tabular*}
+\end{table*}
+
+
+\begin{table*}[!t]
+\centering
+\caption{Summary of the PPO-MCC training configurations used in the thesis. Only parameters relevant to comparison between runs and curriculum progression are shown.}
+\label{tab:ppob_all_configs}
+\renewcommand{\arraystretch}{1.1}
+\scriptsize
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc}
+\toprule
+\textbf{Parameter} & \textbf{MCC-1} & \textbf{MCC-2} & \textbf{MCC-3} & \textbf{MCC-4} & \textbf{MCC-5} & \textbf{MCC-6}\\
+\midrule
+\multicolumn{7}{c}{\textbf{PPO Hyper-Parameters}}\\
+\midrule
+$\gamma$ & 0.997 & 0.997 & 0.997 & 0.997 & 0.997 & 0.997\\
+$\lambda_{\mathrm{GAE}}$ & 0.95 & 0.95 & 0.95 & 0.95 & 0.95 & 0.95\\
+Learning rate & $10^{-4}$ & $10^{-4}$ & $10^{-4}$ & $10^{-4}$ & $10^{-4}$ & $10^{-4}$\\
+Batch size & 256 & 256 & 256 & 256 & 256 & 256\\
+Rollout steps & 256 & 256 & 256 & 256 & 256 & 256\\
+PPO epochs & 8 & 8 & 8 & 8 & 8 & 8\\
+Clip range & 0.15 & 0.15 & 0.15 & 0.15 & 0.15 & 0.15\\
+Max gradient norm & 0.5 & 0.5 & 0.5 & 0.5 & 0.5 & 0.5\\
+Default entropy coefficient & 0.003 & 0.003 & 0.003 & 0.003 & 0.003 & 0.003\\
+Number of environments & 8 & 8 & 8 & 8 & 8 & 8\\
+\midrule
+\multicolumn{7}{c}{\textbf{Mission / Environment Parameters}}\\
+\midrule
+Trajectory source index & 0 & 0 & 0 & 0 & 0 & 0\\
+Trajectory library & -- & -- & -- & -- & -- & --\\
+Scenario prob. good & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2\\
+Scenario prob. savable & 0.6 & 0.6 & 0.6 & 0.6 & 0.6 & 0.6\\
+Scenario prob. bad & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2\\
+Max staged burn magnitude & 0.4 & 0.4 & 0.4 & 0.4 & 0.4 & 0.4\\
+MCC max burn magnitude & 0.03 & 0.03 & 0.03 & 0.03 & 0.03 & 0.03\\
+Lunar flyby radius & 0.06 & 0.06 & 0.06 & 0.06 & 0.06 & 0.06\\
+Return corridor min & 0.0143 & 0.0143 & 0.0143 & 0.0143 & 0.0143 & 0.0143\\
+Return corridor max & 0.06 & 0.06 & 0.06 & 0.06 & 0.06 & 0.06\\
+Maximum mission time & 2.4 & 2.4 & 2.4 & 2.4 & 2.4 & 2.4\\
+\midrule
+\multicolumn{7}{c}{\textbf{Base Reward Weights}}\\
+\midrule
+$w_{\mathrm{flyby}}$ & 10 & 10 & 10 & 10 & 10 & 10\\
+$w_{\mathrm{return}}$ & 100 & 100 & 100 & 100 & 100 & 100\\
+$w_{\Delta v}$ & 200 & 12 & 25 & 30 & 30 & 25\\
+$w_{\mathrm{budget}}$ & 40 & 40 & 40 & 40 & 40 & 40\\
+$w_{\mathrm{escape}}$ & 60 & 60 & 60 & 60 & 60 & 60\\
+$w_{\mathrm{earth}}$ & 150 & 150 & 150 & 150 & 150 & 150\\
+$w_{\mathrm{moon}}$ & 20 & 20 & 20 & 20 & 20 & 20\\
+$w_{\mathrm{postflyby\,earth}}$ & 50 & 50 & 50 & 50 & 50 & 70\\
+$w_{\mathrm{invalid}}$ & 60 & 60 & 60 & 60 & 60 & 60\\
+\midrule
+\multicolumn{7}{c}{\textbf{Curriculum Stages}}\\
+\midrule
+\multicolumn{7}{c}{\textit{Stage 1}}\\
+\midrule
+Training steps & 200\,704 & 200\,704 & 200\,704 & 200\,704 & 401\,408 & 200\,704\\
+Entropy coefficient & 0.009 & 0.009 & 0.009 & 0.009 & 0.009 & 0.009\\
+$w_{\Delta v}$ & 200 & 12 & 25 & 30 & 30 & 25\\
+$w_{\mathrm{postflyby\,earth}}$ & 50 & 50 & 50 & 50 & 50 & 70\\
+\midrule
+\multicolumn{7}{c}{\textit{Stage 2}}\\
+\midrule
+Training steps & 200\,704 & 200\,704 & 200\,704 & 200\,704 & 100\,352 & 100\,352\\
+Entropy coefficient & 0.006 & 0.006 & 0.006 & 0.006 & 0.006 & 0.006\\
+$w_{\Delta v}$ & 250 & 13 & 30 & 40 & 40 & 30\\
+$w_{\mathrm{postflyby\,earth}}$ & 50 & 50 & 50 & 50 & 50 & 70\\
+\midrule
+\multicolumn{7}{c}{\textit{Stage 3}}\\
+\midrule
+Training steps & 200\,704 & 200\,704 & 200\,704 & 200\,704 & 100\,352 & 100\,352\\
+Entropy coefficient & 0.001 & 0.001 & 0.001 & 0.001 & 0.001 & 0.001\\
+$w_{\Delta v}$ & 300 & 15 & 35 & 50 & 50 & 35\\
+$w_{\mathrm{postflyby\,earth}}$ & 50 & 50 & 50 & 50 & 50 & 70\\
+\bottomrule
+\end{tabular*}
+\end{table*}
