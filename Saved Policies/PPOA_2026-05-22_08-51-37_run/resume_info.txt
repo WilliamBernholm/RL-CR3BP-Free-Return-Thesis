@@ -1,0 +1,5 @@
+training_source = fresh training
+training_mode = restart_curriculum_from_stage0
+restart_stage = 0
+restart_step = 0
+
