@@ -1,0 +1,10 @@
+PPO vs nominal validation summary
+============================================================
+
+tli_ppo: N=2000, success=687, SR=34.4%
+tli_nominal: N=2000, success=735, SR=36.8%
+mcc_ppo: N=2000, success=1215, SR=60.8%
+mcc_nominal: N=2000, success=1130, SR=56.5%
+
+TLI validation CSV: C:\Users\willi\MEX\PPO LSTM CR3BP\PPO LSTM CR3BP V4\sensitivity analysis\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\tli_validation_samples.csv
+MCC validation CSV: C:\Users\willi\MEX\PPO LSTM CR3BP\PPO LSTM CR3BP V4\sensitivity analysis\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\mcc_validation_samples.csv

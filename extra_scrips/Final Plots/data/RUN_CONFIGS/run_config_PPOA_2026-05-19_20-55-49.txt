@@ -1,0 +1,288 @@
+==============================================================================
+RUN CONFIGURATION
+==============================================================================
+timestamp: 2026-05-19_20-55-49
+
+[RUN]
+resume_source = fresh training
+enable_plotting = True
+saved_root_name = Saved Policies
+total_timesteps = 2000000
+n_envs = 8
+train_seed = 1000
+eval_seed = 999
+eval_interval_steps = 4096
+eval_episodes = 16
+plot_every_evals = 1
+checkpoint_every = 40960
+
+[PPO-LSTM]
+gamma = 0.997
+gae_lambda = 0.95
+n_steps = 256
+batch_size = 256
+n_epochs = 8
+learning_rate = 0.0001
+clip_range = 0.15
+max_grad_norm = 0.5
+ent_coef_default = 0.003
+device = auto
+
+[UNITS / CONVERSIONS]
+cr3bp_Lstar_km = 384400.0
+cr3bp_Tstar_s = 375200.0
+cr3bp_Vstar_kms = 1.0245202558635393
+
+[ACTION MODEL]
+action_space = [ax, ay, tau_raw]
+burn semantics = direct planar burn vector
+timing semantics = burn first, then drift
+
+[DRIFT MODEL]
+drift_min_minutes_pre_tli = 0.08333333333333333
+drift_max_minutes_pre_tli = 1.0
+drift_min_nondim_pre_tli = 1.3326226012793176e-05
+drift_max_nondim_pre_tli = 0.00015991471215351814
+drift_min_minutes_post_tli = 10.0
+drift_max_minutes_post_tli = 3000.0
+drift_min_nondim_post_tli = 0.0015991471215351812
+drift_max_nondim_post_tli = 0.47974413646055436
+pre_tli_burn_deadzone_frac_of_tli_cap = 0.0
+no_tli_terminate_after_leo_orbits = 3.0
+
+[BURN CAPS]
+use_global_burn_cap_kms = False
+global_burn_cap_kms = 3.5
+global_burn_cap_nondim = 3.4162330905306977
+use_single_dv_cap = False
+dv_cap_single = 4.4
+tli_dv_max_kms = 0.4
+mcc_dv_max_kms = 0.03
+
+[TLI BALLISTIC TRIGGER]
+tli_ballistic_scale = 0.7
+tli_ballistic_trigger_kms = 3.1
+tli_ballistic_trigger_nondim = 3.0258064516129037
+tli_departure_trigger_rE = 0.1
+tli_commit_rule = commit when dv_mag >= trigger OR rE >= departure trigger
+
+[PROPAGATION]
+fine_substep_region_radius = 0.1
+fine_rk4_substep_minutes = 1.0
+rk4_substep_target_min_minutes = 1.0
+rk4_substep_target_max_minutes = 5.0
+rk4_target_transition_min_minutes = 10.0
+rk4_target_transition_max_minutes = 300.0
+
+[CR3BP CONFIG BASE]
+mu = 0.012150585609624
+dt = 0.0048
+t_max = 2.4
+integration_substeps = 50
+r0_earth = 0.0176
+v_circ_earth = 7.5
+r_moon_flyby = 0.06
+r_earth_return = 0.05
+r_earth_impact = 0.014
+r_moon_impact = 0.0045
+r_escape = 2.0
+rp_min = 0.0143
+rp_max = 0.06
+dv_max_tli = 4.4
+dv_max_mcc = 0.1
+dv_noise_sigma_tli = 0.0
+dv_noise_sigma_mcc = 0.0
+mcc_enabled = True
+store_dense_training_traj = False
+add_mode_obs = True
+add_legacy_mode_obs = False
+legacy_mode_obs_fields = [tli_used_flag, tau_max_current_norm, dv_cap_current_norm, pre_tli_clock_norm]
+pos_scale = 1.0
+vel_scale = 10.0
+c_scale = 55.0
+add_phase_angle_obs = True
+trainer_mode = ppo_a
+tli_control_mode = full
+ppo_b_baseline_theta = 4.71238898038469
+ppo_b_baseline_ax = 1.0
+ppo_b_baseline_ay = 0.0
+ppo_b_baseline_tau = 0.0
+ppo_b_baseline_state_noise_pos = 0.0
+ppo_b_baseline_state_noise_vel = 0.0
+ppo_b_case_source = baseline
+ppo_b_library_path = 
+ppo_b_prob_good = 0.2
+ppo_b_prob_savable = 0.6
+ppo_b_prob_bad = 0.2
+ppo_b_eval_use_same_distribution = True
+ppo_b_noise_theta_deg = 0.0
+ppo_b_noise_tli_dir_deg = 0.0
+ppo_b_noise_tli_dv_kms = 0.0
+ppo_b_use_fixed_index = False
+ppo_b_fixed_index = 0
+ppo_b_fixed_state_noise_pos = 0.0
+ppo_b_fixed_state_noise_vel = 0.0
+tli_only_mode = False
+reward_after_tli_ballistic_enabled = False
+spawn_theta_limit_enabled = True
+spawn_theta_min = 4.04056
+spawn_theta_max = 4.04056
+terminate_on_dv_budget_exceed = True
+
+[REWARD CONFIG DEFAULTS]
+v_target_moon = 0.91067
+v_deadzone = 0.05
+beta_distance_flyby = 2.2
+r0_distance_flyby = 0.18
+beta_distance_return = 3.5
+r0_distance_return = 0.1
+dv_budget = 15.0
+dv_scale = 1.0
+earth_radius = 0.014
+moon_radius = 0.005
+flyby_reward_gate = 1.1
+
+[CURRICULUM]
+Stage 1: ppo_a_stage_1_staged_tli_tiny_noise
+  timesteps = 299008
+  trainer_mode = ppo_a
+  tli_control_mode = full
+  entropy_coef = 0.004
+  mcc_enabled = True
+  tli_only_mode = True
+  reward_after_tli_ballistic_enabled = True
+  spawn_theta_limit_enabled = True
+  spawn_theta_min = 4.04056
+  spawn_theta_max = 4.04056
+  ppo_b_baseline_theta = 4.7181
+  ppo_b_baseline_ax = 0.9751105905
+  ppo_b_baseline_ay = -0.4365218282
+  ppo_b_baseline_tau = -0.199569
+  ppo_b_baseline_state_noise_pos = 0
+  ppo_b_baseline_state_noise_vel = 0
+  ppo_b_case_source = scenario_library
+  ppo_b_library_path = rough_scenario_classification/manual_cases/ppob_case94_ab_library.npz
+  ppo_b_prob_good = 0.0
+  ppo_b_prob_savable = 0.5
+  ppo_b_prob_bad = 0.5
+  ppo_b_eval_use_same_distribution = True
+  ppo_b_noise_theta_deg = 0.0
+  ppo_b_noise_tli_dir_deg = 0.0
+  ppo_b_noise_tli_dv_kms = 0.0
+  ppo_b_use_fixed_index = False
+  ppo_b_fixed_index = 0
+  ppo_b_fixed_state_noise_pos = 0.0
+  ppo_b_fixed_state_noise_vel = 0.0
+  dv_noise_sigma_tli = 9.76066597294485e-07
+  dv_noise_sigma_mcc = 0.0
+  use_manual_log_std = False
+  manual_log_std_value = 0.0
+  w_flyby = 140.0
+  w_velocity = 0.0
+  w_dv = 0.2
+  w_return = 160.0
+  w_budget = 80.0
+  w_escape = 12.0
+  w_earth_crash = 150.0
+  w_moon_crash = 5.0
+  w_postflyby_earth_crash = 90.0
+  w_invalid_preflyby_earth_return = 10.0
+
+Stage 2: ppo_a_stage_2_staged_tli_small_noise
+  timesteps = 100352
+  trainer_mode = ppo_a
+  tli_control_mode = full
+  entropy_coef = 0.003
+  mcc_enabled = True
+  tli_only_mode = True
+  reward_after_tli_ballistic_enabled = True
+  spawn_theta_limit_enabled = True
+  spawn_theta_min = 4.04056
+  spawn_theta_max = 4.04056
+  ppo_b_baseline_theta = 4.7181
+  ppo_b_baseline_ax = 0.9751105905
+  ppo_b_baseline_ay = -0.4365218282
+  ppo_b_baseline_tau = -0.199569
+  ppo_b_baseline_state_noise_pos = 0
+  ppo_b_baseline_state_noise_vel = 0
+  ppo_b_case_source = scenario_library
+  ppo_b_library_path = rough_scenario_classification/manual_cases/ppob_case94_ab_library.npz
+  ppo_b_prob_good = 0.0
+  ppo_b_prob_savable = 0.5
+  ppo_b_prob_bad = 0.5
+  ppo_b_eval_use_same_distribution = True
+  ppo_b_noise_theta_deg = 0.0
+  ppo_b_noise_tli_dir_deg = 0.0
+  ppo_b_noise_tli_dv_kms = 0.0
+  ppo_b_use_fixed_index = False
+  ppo_b_fixed_index = 0
+  ppo_b_fixed_state_noise_pos = 0.0
+  ppo_b_fixed_state_noise_vel = 0.0
+  dv_noise_sigma_tli = 9.760665972944851e-06
+  dv_noise_sigma_mcc = 0.0
+  use_manual_log_std = False
+  manual_log_std_value = 0.0
+  w_flyby = 140.0
+  w_velocity = 0.0
+  w_dv = 0.2
+  w_return = 160.0
+  w_budget = 80.0
+  w_escape = 12.0
+  w_earth_crash = 150.0
+  w_moon_crash = 5.0
+  w_postflyby_earth_crash = 100.0
+  w_invalid_preflyby_earth_return = 10.0
+
+Stage 3: ppo_a_stage_3_staged_tli_refinment
+  timesteps = 100352
+  trainer_mode = ppo_a
+  tli_control_mode = full
+  entropy_coef = 0.002
+  mcc_enabled = True
+  tli_only_mode = True
+  reward_after_tli_ballistic_enabled = True
+  spawn_theta_limit_enabled = True
+  spawn_theta_min = 4.04056
+  spawn_theta_max = 4.04056
+  ppo_b_baseline_theta = 4.7181
+  ppo_b_baseline_ax = 0.9751105905
+  ppo_b_baseline_ay = -0.4365218282
+  ppo_b_baseline_tau = -0.199569
+  ppo_b_baseline_state_noise_pos = 0
+  ppo_b_baseline_state_noise_vel = 0
+  ppo_b_case_source = scenario_library
+  ppo_b_library_path = rough_scenario_classification/manual_cases/ppob_case94_ab_library.npz
+  ppo_b_prob_good = 0.0
+  ppo_b_prob_savable = 0.5
+  ppo_b_prob_bad = 0.5
+  ppo_b_eval_use_same_distribution = True
+  ppo_b_noise_theta_deg = 0.0
+  ppo_b_noise_tli_dir_deg = 0.0
+  ppo_b_noise_tli_dv_kms = 0.0
+  ppo_b_use_fixed_index = False
+  ppo_b_fixed_index = 0
+  ppo_b_fixed_state_noise_pos = 0.0
+  ppo_b_fixed_state_noise_vel = 0.0
+  dv_noise_sigma_tli = 9.760665972944851e-06
+  dv_noise_sigma_mcc = 0.0
+  use_manual_log_std = False
+  manual_log_std_value = 0.0
+  w_flyby = 140.0
+  w_velocity = 0.0
+  w_dv = 0.2
+  w_return = 160.0
+  w_budget = 80.0
+  w_escape = 12.0
+  w_earth_crash = 150.0
+  w_moon_crash = 5.0
+  w_postflyby_earth_crash = 140.0
+  w_invalid_preflyby_earth_return = 25.0
+
+=== actual_rl_backend ===
+ppo_class_name = TimeAwareRecurrentPPOv2
+ppo_module_name = custom_rl.ppo_recurrent.time_aware_ppo_recurrent_V2
+ppo_file = /home/masterstudent/PPOA_Default_12/custom_rl/ppo_recurrent/time_aware_ppo_recurrent_V2.py
+buffer_class_name = TimeAwareRecurrentRolloutBuffer
+buffer_module_name = custom_rl.recurrent.time_aware_buffers_V2
+buffer_file = /home/masterstudent/PPOA_Default_12/custom_rl/recurrent/time_aware_buffers_V2.py
+

@@ -1,0 +1,64 @@
+{
+  "created": "2026-06-07T16:18:53.716062",
+  "run_tag": "ppo_vs_nominal_validation_fixed",
+  "tli_folder": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\PPOA_2026-05-22_08-51-37_run__Model__stage03_step00757760_R139.38_SR1.000_LD1.00431_CMnan__2026-05-23_17-09-05__mode_tli__N500__2026-06-02_16-52-34",
+  "mcc_folder": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\PPOB_2026-05-08_10-56-47_run__PPOB__stage_3_done_step_602112__2026-05-10_01-42-13__mode_mcc__N500__2026-06-02_10-37-13",
+  "tli_reference_json": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\strict_nominal_optimizer_2026-06-05_10-58-12\\best_tli_solution.json",
+  "mcc_reference_json": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\strict_nominal_optimizer_2026-06-05_10-58-12\\best_mcc_solution.json",
+  "tli_model_path": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\Saved Policies\\PPOA_2026-05-22_08-51-37_run\\Model__stage03_step00757760_R139.38_SR1.000_LD1.00431_CMnan__2026-05-23_17-09-05",
+  "mcc_model_path": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\Saved Policies\\PPOB_2026-05-08_10-56-47_run\\PPOB__stage_3_done_step_602112__2026-05-10_01-42-13.zip",
+  "tli_recovered": {
+    "policy_step": -1,
+    "stage_idx": 0,
+    "stage_name": "ppo_a_stage_1_staged_tli_tiny_noise",
+    "mcc_enabled": true,
+    "tli_only_mode": true,
+    "reward_after_tli_ballistic_enabled": true,
+    "config_file_found": true,
+    "trainer_mode": "ppo_a",
+    "tli_control_mode": "full"
+  },
+  "mcc_recovered": {
+    "policy_step": 602112,
+    "stage_idx": 2,
+    "stage_name": "ppo_b_dv_refine_final",
+    "mcc_enabled": true,
+    "tli_only_mode": false,
+    "reward_after_tli_ballistic_enabled": false,
+    "config_file_found": true,
+    "trainer_mode": "ppo_b_library",
+    "tli_control_mode": "full"
+  },
+  "summary": {
+    "tli_ppo": {
+      "N": 2000,
+      "success_count": 687,
+      "success_rate": 0.3435
+    },
+    "tli_nominal": {
+      "N": 2000,
+      "success_count": 735,
+      "success_rate": 0.3675
+    },
+    "mcc_ppo": {
+      "N": 2000,
+      "success_count": 1215,
+      "success_rate": 0.6075
+    },
+    "mcc_nominal": {
+      "N": 2000,
+      "success_count": 1130,
+      "success_rate": 0.565
+    }
+  },
+  "outputs": {
+    "tli_validation_csv": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\\tli_validation_samples.csv",
+    "mcc_validation_csv": "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\\mcc_validation_samples.csv",
+    "plots": [
+      "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\\tli_ppo_trajectory_overlay.png",
+      "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\\tli_nominal_trajectory_overlay.png",
+      "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\\mcc_ppo_trajectory_overlay.png",
+      "C:\\Users\\willi\\MEX\\PPO LSTM CR3BP\\PPO LSTM CR3BP V4\\sensitivity analysis\\ppo_vs_nominal_validation_fixed_2026-06-07_10-47-47\\mcc_nominal_trajectory_overlay.png"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+Main runs
+
+PPOA_2026-05-22_08-51-37_run (Laptop+Drive exp 14)
+
+PPOB_2026-05-08_10-56-47_run (OneDrive)
+
+
+Reward validation: 
+
+TLI: 
+2026-05-22_08-51-37 (Drive exp 14)
+2026-05-19_20-55-49 (Drive exp 12)
+2026-05-16_07-30-12 (OneDrive exp 08)
+
+MCC: 
+PPOB_2026-05-06_17-59-54_run (6 7.5 9) (OneDrive) 
+PPOB_2026-05-13_09-26-38_run (25 30 40) (OneDrive)
+PPOB_2026-05-15_20-37-20_run (30 40 50) (OneDrive)
+PPOB_2026-05-17_22-25-40_run (30 40 50 ent) (Drive)
+
+
+Angle: 
+
+PPOA_2026-05-24_10-07-37_run (Drive)(incorect)
+(eval0183_step000749568_arrays.npz)
+
+
+
