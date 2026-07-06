@@ -169,7 +169,7 @@ from curriculum_ppoa import build_curriculum_ppoa
 from curriculum_ppob import build_curriculum_ppob
 
 from cr3bp_env_v4 import (
-    SeanStyleReward,
+    RewardFunction,
     CR3BPFreeReturnEnv,
     apply_stage_to_cfg,
     build_reward_factory,
@@ -3229,7 +3229,7 @@ def load_and_rollout():
     env = CR3BPFreeReturnEnv(
         cfg,
         seed=RUN.eval_seed,
-        reward_model=SeanStyleReward(RewardConfig(), weights),
+        reward_model=RewardFunction(RewardConfig(), weights),
     )
     env.set_debug_eval(True)
 
@@ -3321,7 +3321,7 @@ def batch_eval_saved_policy(n_eval_episodes: int = SAVED_POLICY_BATCH_EVAL_EPISO
     eval_env = CR3BPFreeReturnEnv(
         cfg,
         seed=RUN.eval_seed,
-        reward_model=SeanStyleReward(RewardConfig(), weights),
+        reward_model=RewardFunction(RewardConfig(), weights),
     )
     eval_env.set_debug_eval(True)
 

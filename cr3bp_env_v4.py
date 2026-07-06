@@ -280,7 +280,7 @@ def apply_stage_to_cfg(base_cfg: CR3BPConfig, stage: CurriculumStage) -> CR3BPCo
 
 
 
-class SeanStyleReward:
+class RewardFunction:
     def __init__(self, config: RewardConfig, weights: RewardWeights):
         self.cfg = config
         self.w = weights
@@ -759,7 +759,7 @@ def snap_curriculum_timesteps(curriculum):
 
 def build_reward_factory(reward_cfg: RewardConfig, weights: RewardWeights):
     def _factory():
-        return SeanStyleReward(copy.deepcopy(reward_cfg), weights)
+        return RewardFunction(copy.deepcopy(reward_cfg), weights)
     return _factory
 
 
@@ -2770,7 +2770,7 @@ class CR3BPFreeReturnEnv(gym.Env):
             return 0.0, terms
 
         # Build a temporary reward model so we can reuse the real reward logic
-        temp_rm = SeanStyleReward(self.reward_model.cfg, self.reward_model.w)
+        temp_rm = RewardFunction(self.reward_model.cfg, self.reward_model.w)
         temp_rm.reset_episode()
 
         # Seed the temporary reward model with ballistic closest-approach data
