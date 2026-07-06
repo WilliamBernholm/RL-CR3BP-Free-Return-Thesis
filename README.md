@@ -10,6 +10,10 @@ William Bernholm · Supervisor: Gunnar Tibert · Examiner: Huina Mao · July 202
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 
+<p align="center">
+  <img src="Images/Money_shot_v2.png" alt="Free-return trajectory" width="600">
+</p>
+
 ---
 
 ## Overview
@@ -27,28 +31,53 @@ The results show that an RL agent can both discover and correct free-return traj
 
 ## Key Results
 
-| PPO-TLI: free-return rate during training | PPO-MCC: mean evaluation reward |
+| PPO-TLI: generated free-return trajectory | PPO-MCC: mid-course correction |
 |---|---|
-| ![PPO-TLI free return rate](Saved%20Policies/PPOA_2026-05-22_08-51-37_run/final_training_plots/final_free_return_rates.png) | ![PPO-MCC eval reward](Saved%20Policies/PPOB_2026-05-19_13-16-55_run/final_training_plots/final_mean_eval_reward.png) |
+| ![PPO-TLI rotating-frame trajectory](Images/trajectory_tli_rotating.png) | ![PPO-MCC correction overlay](Images/trajectory_mcc_overview_rotating.png) |
 
-![Corrected trajectory overlay](rough_scenario_classification/overlays/good_overlay.png)
-*Example of a successfully corrected near free-return trajectory (MCC).*
+The PPO-TLI agent learns the burn direction, magnitude, and timing needed to leave LEO and swing past the Moon back to Earth (left). The PPO-MCC agent takes a near free-return trajectory and, through one or more small corrective burns, recovers a full free-return trajectory — the overlay above compares the uncorrected path (orange, dotted) against the corrected result (blue), with each colored marker showing where a correction burn was applied.
 
-Highlights from the thesis:
+![TLI success map over phase angle and burn magnitude](Images/grid_sweep_success_map.png)
+
+This success map — sweeping phase angle against TLI burn magnitude — illustrates just how narrow the feasible solution space for a free-return trajectory actually is: only a few thin bands (yellow) out of the full search grid actually produce a successful transfer. This narrowness is the core reason the RL problem is hard, and why both agents' performance is so sensitive to small deviations.
 
 - The PPO-MCC agent recovered a near free-return trajectory (library index 65) using a total correction of **≈45 m/s**, compared to a **≈23.5 m/s** single-impulse optimum found via differential evolution — a useful reference for how close the learned policy gets to the classical optimal correction.
-- Under Monte Carlo perturbation testing (position σ up to 2000 m, velocity σ up to 10 m/s), the trained policies were compared against simply replaying the nominal open-loop action:
 
-  | Agent | Nominal | Position only | Velocity only | Position + velocity |
-  |---|---|---|---|---|
-  | PPO-TLI (adaptive) | 100.0% | 28.2% | 5.8% | 3.4% |
-  | PPO-MCC (adaptive) | 100.0% | 99.2% | 21.2% | 22.6% |
+### Robustness to Perturbations
 
-  PPO-MCC's closed-loop correction meaningfully outperforms open-loop replay under position perturbations, while PPO-TLI's success rate collapses quickly — reflecting the much higher sensitivity of the TLI phase of the mission.
+Monte Carlo perturbation testing (position σ up to 2000 m, velocity σ up to 10 m/s, N=500 per case) compares each trained policy ("PPO", closed-loop adaptation) against simply replaying its nominal open-loop action ("Nom.") from the same perturbed initial state:
+
+**TLI sensitivity validation comparing PPO adaptation against nominal-action replay**
+
+| Case | σᵣ [m] | σᵥ [m/s] | N | PPO [%] | Nom. [%] | Δ [pp] |
+|---|---|---|---|---|---|---|
+| Nominal | 0 | 0 | 500 | 100.0 | 100.0 | +0.0 |
+| Position only | 2000 | 0 | 500 | 28.2 | 34.8 | −6.6 |
+| Velocity only | 0 | 10 | 500 | 5.8 | 7.4 | −1.6 |
+| Position + velocity | 2000 | 10 | 500 | 3.4 | 4.8 | −1.4 |
+| **Total** | – | – | 2000 | **34.4** | **36.8** | −2.4 |
+
+**MCC sensitivity validation comparing PPO adaptation against nominal-action replay**
+
+| Case | σᵣ [m] | σᵥ [m/s] | N | PPO [%] | Nom. [%] | Δ [pp] |
+|---|---|---|---|---|---|---|
+| Nominal | 0 | 0 | 500 | 100.0 | 100.0 | +0.0 |
+| Position only | 2000 | 0 | 500 | 99.2 | 84.0 | +15.2 |
+| Velocity only | 0 | 10 | 500 | 21.2 | 20.8 | +0.4 |
+| Position + velocity | 2000 | 10 | 500 | 22.6 | 21.2 | +1.4 |
+| **Total** | – | – | 2000 | **60.8** | **56.5** | +4.3 |
+
+| PPO-TLI sensitivity scatter | PPO-MCC sensitivity scatter |
+|---|---|
+| ![PPO-TLI sensitivity scatter](Images/sensitivity_tli_success_scatter.png) | ![PPO-MCC sensitivity scatter](Images/sensitivity_mcc_success_scatter.png) |
+
+PPO-MCC's closed-loop correction clearly outperforms open-loop replay under position perturbations (+15.2 pp), while PPO-TLI's success rate collapses quickly under any perturbation — reflecting the much higher sensitivity of the TLI phase of the mission, consistent with the narrow solution space shown above.
 
 The full derivation, reward design, curriculum tables, and discussion are in the [thesis report](#citation).
 
 ## Method Summary
+
+![Software architecture and data flow](Images/DataPipeline.png)
 
 - **Environment (`cr3bp_env_v4.py`)** — planar Earth–Moon CR3BP dynamics, nondimensionalized, propagated with an adaptive-timestep RK4 integrator that automatically refines near Earth/Moon close approaches. Supports both PPO-TLI (spawn in LEO at a given phase angle) and PPO-MCC (spawn from a precomputed post-TLI handoff state) training regimes, plus a configurable terminal + dense reward function.
 - **Custom RL backend (`custom_rl/`)** — extends Stable-Baselines3's recurrent PPO to support the variable-duration (SMDP) action structure used here:
@@ -73,6 +102,7 @@ The full derivation, reward design, curriculum tables, and discussion are in the
 | [`All configs used/`](All%20configs%20used) | Exported run-configuration tables (TLI/MCC) referenced in the thesis appendix |
 | [`rough_scenario_classification/`](rough_scenario_classification) | Handoff-state scenario library used to initialize PPO-MCC training, plus classification data/overlays |
 | [`extra_scrips/`](extra_scrips) | Supporting analysis scripts: differential-evolution baselines, reward-landscape heatmaps, sensitivity/perturbation replay, TLI→MCC handoff tooling |
+| [`Images/`](Images) | Curated figures used in this README (hero shot, architecture diagram, trajectory plots, success/sensitivity maps) |
 
 ## Setup
 
